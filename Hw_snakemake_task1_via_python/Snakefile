@@ -1,0 +1,6 @@
+rule all:
+  input: "input/input"
+  output: "output/output"
+  run:
+    with open(input[0],'r') as inp_file, open(output[0],'w') as out_file:
+    out_file.write(str(len(inp_file.readline().split())))
