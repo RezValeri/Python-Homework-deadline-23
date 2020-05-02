@@ -1,0 +1,15 @@
+IDS,=glob_wildcards("input/{id,\w+}")
+rule all:
+  input: expand("input/{id}", id=IDS)
+  output: expand("output/{id}", id=IDS)
+  run:
+    for i in range(len(input)):
+      with open(str(input[i]),'r') as inp_file, open(str(output[i]),'w') as out_file:
+        for line in inp_file:
+          line=line.replace('\n','').replace(' ', '').replace('.', '').lower()
+          a=list(line)
+          a.sort()
+          d=dict(zip(a,[a.count(i) for i in a]))
+          for l,num in d.items():
+            out_file.write('{}: {}\n'.format(l,num))
+
